@@ -2,7 +2,7 @@ const db = require('../models');
 const User = db.users;
 const jwt = require('jsonwebtoken');
 //const { request } = require('express');
-const bcrypt =require('bcrypt');
+const bcrypt = require('bcrypt');
 
 
 //Here we are creating user if the user is null we are creating user and if not we are saying user already exists
@@ -19,18 +19,15 @@ module.exports.signup = (req, res) => {
         console.log(user);
         if (user === null) {
             const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(req.body.password,salt);
+            const hash = bcrypt.hashSync(req.body.password, salt);
             console.log(hash);
-            return;
-
-
             //signup use
             const user = new User({
                 "email": req.body.email,
-                "name": req.body.firstname +" "+ req.body.lastname,
-                "password": req.body.password,
-                "contact" : req.body.contact
-                
+                "name": req.body.firstname + " " + req.body.lastname,
+                "password": hash,
+                "contact": req.body.contact
+
             });
 
             user.
@@ -79,11 +76,12 @@ module.exports.login = (req, res) => {
                                 message: "Some error occurred, please try again later."
                             });
                         } else {
-                            //  const token = jwt.sign({ _id: data._id }, 'myprivatekey');
-                            //data.token = token;
+                            const token = jwt.sign({ _id: user._id }, 'myprivatekey');
+
+                            user.token = token;
                             //store user object in sessionstorage
                             sessionStorage.setItem("loggedinUser", user);
-                            res.send(data);
+                            res.send(user);
                         }
                     })
                     .catch(err => {

@@ -6,8 +6,8 @@ module.exports = app => {
     router.get("/products", product.findProducts);
     router.get("/products/categories",product.getProductCategory);
     router.get("products/:id".product.getProductId);
-    router.post("/products",product.saveProducts);
-    router.put("/products/:id",product.updateProduct)
+    router.post("/products",auth,product.saveProducts);
+    router.put("/products/:id",auth,product.updateProduct)
 
 
     app.use('/api', router);

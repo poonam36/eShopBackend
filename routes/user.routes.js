@@ -3,9 +3,9 @@ module.exports = app => {
 
     const user = require('../controllers/user.controller')
 
-    router.post("/users", user.signup);
+    router.post("/users",auth, user.signup);
 
-    //router.post("/login", user.login);
+    router.post("/login",admin ,user.login);
 
     app.use('/api', router);
 

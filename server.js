@@ -32,9 +32,9 @@ db.mongoose
 
     });
 
-//require('./routes/address.routes')(app)//requiring and invoking the function
-//require('./routes/order.routes')(app)
-//require('./routes/product.routes')(app)
+require('./routes/address.routes')(app)//requiring and invoking the function
+require('./routes/order.routes')(app)
+require('./routes/product.routes')(app)
 require('./routes/user.routes')(app)
 
 
